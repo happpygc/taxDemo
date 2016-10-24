@@ -22,7 +22,7 @@ import com.shenji.test.service.TestService;
 
 public class TestMerge {
 
-	
+	private String home = "in the home";
 	private ClassPathXmlApplicationContext context;
 	
 	@Before
