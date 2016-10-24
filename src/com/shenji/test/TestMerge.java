@@ -8,21 +8,14 @@ import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-
-
-
-
-
-
-
 import com.shenji.test.entity.Person;
 import com.shenji.test.service.TestService;
 
 public class TestMerge {
 
 	private String home = "in the home";
+	private String 中文 = "测试GIT中文";
+	
 	private ClassPathXmlApplicationContext context;
 	
 	@Before
