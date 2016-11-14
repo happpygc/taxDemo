@@ -1,16 +1,7 @@
 package com.shenji.nsfw.user.action;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-
-
-
-
-
-
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -18,28 +9,23 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
-import org.springframework.stereotype.Component;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.shenji.core.action.BaseAction;
 import com.shenji.nsfw.user.entity.User;
 import com.shenji.nsfw.user.service.UserService;
 
-public class UserAction extends ActionSupport {
+public class UserAction extends BaseAction {
 	
 	@Resource
 	private UserService userService;
 	
 	
-/*	public UserService getUserService() {
-		return userService;
-	}
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}*/
+
 	private List<User> userList;
 	private User user;
-	private String[] selectedRow;
+
 	//上传头像相关
 	private File headImg;
 	private String headImgFileName;
@@ -137,7 +123,7 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+	//导入用户列表数据
 	public String importExcel(){
 		if(userExcel != null){
 			if(userExcelFileName.matches("^.+\\.(?i)((xls)|(xlsx))$")){
@@ -146,7 +132,26 @@ public class UserAction extends ActionSupport {
 		}
 		return "list";
 	}
-	
+	//账户的唯一性校验
+	public void verifyAccount(){
+		try {
+			if(user !=null && StringUtils.isNotBlank(user.getAccount())){
+				//2、根据帐号到数据库中校验是否存在该帐号对应的用户
+				List<User> list = userService.findUserByAccountAndId(user.getId(),user.getAccount());
+				String strResult  =  "true";
+				if(list != null && list.size()>0){
+					strResult = "false";
+				}
+				HttpServletResponse response = ServletActionContext.getResponse();
+				response.setContentType("text/html");
+				ServletOutputStream outputStream = response.getOutputStream();
+				outputStream.write(strResult.getBytes());
+				outputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -164,12 +169,7 @@ public class UserAction extends ActionSupport {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public String[] getSelectedRow() {
-		return selectedRow;
-	}
-	public void setSelectedRow(String[] selectedRow) {
-		this.selectedRow = selectedRow;
-	}
+
 	//上传头像相关
 	public File getHeadImg() {
 		return headImg;

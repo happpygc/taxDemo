@@ -25,4 +25,6 @@ public interface UserService {
 			ServletOutputStream outputStream);
 	//导入用户列表
 	public void importExcel(File userExcel, String userExcelFileName);
+	//根据用户名或者ID查找用户
+	public List<User> findUserByAccountAndId(String id, String account);
 }
