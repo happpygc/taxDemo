@@ -13,6 +13,6 @@
     	<!-- 把主题配置成simple -->
 	<constant name="struts.action.extension" value="action" />
 	
-
+	<include file="com/shenji/test/conf/test-struts.xml"></include>
 
 </struts>
