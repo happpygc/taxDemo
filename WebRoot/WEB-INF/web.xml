@@ -12,7 +12,6 @@
   <!-- spring 监听器 -->
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  
   </listener>
   <context-param>
   	<param-name>contextConfigLocation</param-name>
@@ -29,12 +28,6 @@
   	<url-pattern>*.action</url-pattern>
   </filter-mapping>
   
-  
-  
-  
-  
-  
-  
-  
+
   
 </web-app>
