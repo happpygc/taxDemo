@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 
 import org.springframework.stereotype.Service;
 
+import com.shenji.core.util.ExcelUtils;
 import com.shenji.nsfw.user.dao.UserDao;
 import com.shenji.nsfw.user.entity.User;
 import com.shenji.nsfw.user.service.UserService;
@@ -44,6 +46,14 @@ public class UserServiceImpl implements UserService{
 	public List<User> findObjects() {
 		// TODO Auto-generated method stub
 		return userDao.findObjects();
+	}
+
+	@Override
+	public void exportExcel(List<User> userList,
+			ServletOutputStream outputStream) {
+		ExcelUtils.exportUserExcel(userList, outputStream);
+		
+		
 	}
 
 }

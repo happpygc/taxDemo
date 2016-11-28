@@ -2,6 +2,7 @@ package com.shenji.nsfw.user.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -110,6 +113,35 @@ public class UserAction extends ActionSupport {
 		}
 		return "list";
 	}
+	
+	//导出
+	public void exportExcel(){
+		
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("application/x-excel");
+			response.setHeader("Content-Disposition", "attachment;fileName="+new String("用户列表.xls".getBytes(),"ISO-8859-1"));
+			ServletOutputStream outputStream = response.getOutputStream();
+			
+			userService.exportExcel(userService.findObjects(),outputStream);
+			if(outputStream != null){
+				outputStream.close();
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public List<User> getUserList() {
 		return userList;
 	}
