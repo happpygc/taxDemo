@@ -4,12 +4,13 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<package name="test-action" namespace="/" extends="struts-default">
-		<action name="test" class="com.shenji.test.action.TestAction" method="TestSS">
+
+
+	<package name="test" namespace="/" extends="struts-default">
+		<action name="test_*" class="com.shenji.test.action.TestAction" method="TestSS">
+
 			<result name="success">/WEB-INF/jsp/test/test.jsp</result>
 		</action>
 			
 	</package>
-
-
 </struts>

@@ -8,13 +8,15 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     
-    
+ 
     <!--  开启注解扫描 
     <context:component-scan base-package="com.shenji.test.service.impl"></context:component-scan> -->
-    <import resource="classpath:com/shenji/*/conf/*-spring.xml"/>
+    <import resource="classpath:com/shenji/test/conf/*-spring.xml"/>
+    <import resource="classpath:com/shenji/nsfw/*/config/*-spring.xml"/>
     
     <!-- 导入外部的properties配置文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
+    
     
     <!-- 配置c3p0数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -47,7 +49,7 @@
 	</property>
 	<property name="mappingLocations">
 			<list>
-				<!-- <value>classpath:cn/itcast/nsfw/*/entity/*.hbm.xml</value> -->
+				<value>classpath:com/shenji/nsfw/*/entity/*.hbm.xml</value> 
 				<value>classpath:com/shenji/test/entity/*.hbm.xml</value>
 			</list>
 	</property>
@@ -69,10 +71,15 @@
 			<tx:method name="*" rollback-for="Throwable" />
 		</tx:attributes>
 	</tx:advice>
-
+	
+	
 	<!--配置需要进行事务控制的类 -->
 	<aop:config>
 		<aop:pointcut id="serviceOperation" expression="bean(*Service)" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
+	   <!-- 所有dao的parent -->
+	<bean name="baseDao" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 </beans>
