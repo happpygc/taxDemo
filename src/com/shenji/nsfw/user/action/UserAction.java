@@ -44,6 +44,11 @@ public class UserAction extends ActionSupport {
 	private File headImg;
 	private String headImgFileName;
 	private String headImgContenType;
+	//导出相关
+	private File userExcel;
+	private String userExcelFileName;
+	private String userExcelContenType;
+	
 	//列表页面
 	public String listUI(){
 		 userList = userService.findObjects();
@@ -131,11 +136,16 @@ public class UserAction extends ActionSupport {
 			
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
-	
+	public String importExcel(){
+		if(userExcel != null){
+			if(userExcelFileName.matches("^.+\\.(?i)((xls)|(xlsx))$")){
+				userService.importExcel(userExcel,userExcelFileName);
+			}
+		}
+		return "list";
+	}
 	
 	
 	
@@ -179,7 +189,26 @@ public class UserAction extends ActionSupport {
 	public void setHeadImgContenType(String headImgContenType) {
 		this.headImgContenType = headImgContenType;
 	}
-	
+	//导入相关
+	public File getUserExcel() {
+		return userExcel;
+	}
+	public void setUserExcel(File userExcel) {
+		this.userExcel = userExcel;
+	}
+	public String getUserExcelFileName() {
+		return userExcelFileName;
+	}
+	public void setUserExcelFileName(String userExcelFileName) {
+		this.userExcelFileName = userExcelFileName;
+	}
+	public String getUserExcelContenType() {
+		return userExcelContenType;
+	}
+	public void setUserExcelContenType(String userExcelContenType) {
+		this.userExcelContenType = userExcelContenType;
+	}
+	//
 	
 	
 }

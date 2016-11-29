@@ -1,5 +1,6 @@
 package com.shenji.nsfw.user.service.impl;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -47,12 +48,18 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.findObjects();
 	}
-
+	//导出
 	@Override
 	public void exportExcel(List<User> userList,
 			ServletOutputStream outputStream) {
 		ExcelUtils.exportUserExcel(userList, outputStream);
 		
+		
+	}
+	//导出
+	@Override
+	public void importExcel(File userExcel, String userExcelFileName) {
+		ExcelUtils.importUserExcel(userDao, userExcel, userExcelFileName);
 		
 	}
 
